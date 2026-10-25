@@ -1,0 +1,886 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==================== ROOT VARIABLES ==================== */
+:root {
+  /* TradeX Theme Colors (Pink - Blue - Green) */
+  --neon-pink: #FF00CC;
+  --neon-blue: #008FFB;
+  --neon-green: #00E396;
+  --neon-purple: #9B59FF;
+
+  /* Radix/Shadcn UI Variables (HSL Channels) */
+  --primary: 312 100% 50%;
+  /* Matches Neon Pink */
+  --secondary: 206 100% 49%;
+  /* Matches Neon Blue */
+  --accent: 159 100% 45%;
+  /* Matches Neon Green */
+
+  /* Deep Dark Theme */
+  --apple-glass-border: rgba(255, 255, 255, 0.08);
+  --apple-glass-bg: rgba(0, 0, 0, 0.95);
+
+  --dark-bg: #000000;
+  --dark-2: #000000;
+  --dark-card: #000000;
+  --dark-border: #1a1a1a;
+
+  --gray: #6b7280;
+  --light: #ffffff;
+
+  --bg-primary: #000000;
+  --bg-secondary: #000000;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.6);
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.08);
+}
+
+/* Light Theme */
+.light {
+  --dark-bg: #ffffff;
+  --dark-2: #f8f9fa;
+  --dark-card: #ffffff;
+  --dark-border: #e5e7eb;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #111111;
+  --text-secondary: rgba(0, 0, 0, 0.6);
+  --card-bg: rgba(0, 0, 0, 0.02);
+  --card-border: rgba(0, 0, 0, 0.08);
+  --apple-glass-bg: rgba(255, 255, 255, 0.9);
+  --apple-glass-border: rgba(0, 0, 0, 0.08);
+}
+
+.light body {
+  background: #ffffff;
+  color: #111111;
+}
+
+.light .glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.light .glass-nav {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.light .animated-gradient-bg {
+  background: #ffffff;
+}
+
+.light nav {
+  color: #111111;
+}
+
+.light nav a,
+.light nav button,
+.light nav span {
+  color: #111111;
+}
+
+.light nav .text-white\/70,
+.light nav .text-white\/80 {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.light h1,
+.light h2,
+.light h3,
+.light h4,
+.light h5,
+.light h6 {
+  color: #111111;
+}
+
+.light p,
+.light span,
+.light li {
+  color: #333333;
+}
+
+.light .text-white {
+  color: #111111 !important;
+}
+
+.light .text-white\/50,
+.light .text-white\/60,
+.light .text-white\/70,
+.light .text-white\/80 {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.light .bg-black\/80 {
+  background: rgba(255, 255, 255, 0.95) !important;
+}
+
+.light .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.light .hover\:bg-white\/10:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.light .bg-white\/5,
+.light .bg-white\/10 {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.light ::-webkit-scrollbar-track {
+  background: #f8f9fa;
+}
+
+.light .stock-ticker,
+.light .forex-ticker {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.98), rgba(255, 255, 255, 0.95));
+  border-top-color: rgba(0, 0, 0, 0.1);
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.light .stock-symbol,
+.light .forex-pair {
+  color: #111111;
+}
+
+.light .course-card-cinematic {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 249, 250, 0.95));
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.light .input-glass {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #111111;
+}
+
+.light .input-glass::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+}
+
+/* Additional Light Mode Text Visibility Fixes */
+.light .text-white\/20,
+.light .text-white\/30,
+.light .text-white\/40 {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.light .placeholder-white\/20::placeholder,
+.light .placeholder-white\/30::placeholder,
+.light .placeholder-white\/40::placeholder {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Light mode form inputs */
+.light input,
+.light textarea,
+.light select {
+  color: #111111 !important;
+}
+
+.light input::placeholder,
+.light textarea::placeholder {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Light mode buttons */
+.light .gradient-btn {
+  color: white !important;
+}
+
+/* Light mode admin panel */
+.light .bg-black {
+  background: #ffffff !important;
+}
+
+.light .bg-black\/60,
+.light .bg-black\/80,
+.light .bg-black\/90 {
+  background: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Light mode table text */
+.light table,
+.light th,
+.light td {
+  color: #111111;
+}
+
+.light tbody tr:hover {
+  background: rgba(0, 0, 0, 0.02) !important;
+}
+
+/* Light mode dividers */
+.light .divide-white\/5>*+* {
+  border-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Light mode icons */
+.light .text-white\/60 svg,
+.light .text-white\/40 svg {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Light mode modal backdrop */
+.light .backdrop-blur-xl {
+  background: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Light mode auth modal */
+.light .glass-card h1,
+.light .glass-card h2,
+.light .glass-card h3 {
+  color: #111111 !important;
+}
+
+/* Light mode OTP input */
+.light input[type="text"].tracking-widest {
+  color: #111111 !important;
+}
+
+/* Light mode error/success messages */
+.light .text-red-400 {
+  color: #dc2626 !important;
+}
+
+.light .text-green-400 {
+  color: #16a34a !important;
+}
+
+.light .text-pink-400 {
+  color: #db2777 !important;
+}
+
+/* Additional text opacity overrides for better contrast */
+.light .text-white\/90 {
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Improve contrast for very low opacity text */
+.light .text-white\/20 {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.light .text-white\/30 {
+  color: rgba(0, 0, 0, 0.55) !important;
+}
+
+/* Focus states for light mode */
+.light input:focus,
+.light textarea:focus,
+.light select:focus {
+  border-color: #db2777 !important;
+  box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.2) !important;
+}
+
+/* Light mode blue accents */
+.light .text-blue-400 {
+  color: #2563eb !important;
+}
+
+.light .text-blue-500 {
+  color: #1d4ed8 !important;
+}
+
+/* Light mode yellow/orange for warnings */
+.light .text-yellow-400 {
+  color: #d97706 !important;
+}
+
+.light .bg-yellow-500\/10 {
+  background: rgba(217, 119, 6, 0.1) !important;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--dark-bg);
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
+  /* Ensure text is always visible */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Ensure all text elements are visible */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+li {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==================== CUSTOM CURSOR - Optimized ==================== */
+.cursor {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--neon-pink);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.cursor-follower {
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, rgba(255, 0, 204, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.cursor.hover {
+  transform: scale(1.5) translateZ(0);
+  background: rgba(255, 0, 204, 0.15);
+  border-color: var(--neon-blue);
+}
+
+@media (max-width: 1024px) {
+
+  .cursor,
+  .cursor-follower {
+    display: none !important;
+  }
+}
+
+/* ==================== SELECTION ==================== */
+::selection {
+  background: var(--neon-pink);
+  color: white;
+}
+
+/* ==================== SCROLLBAR ==================== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--neon-pink), var(--neon-blue));
+  border-radius: 3px;
+}
+
+/* ==================== GLASSMORPHISM - High Performance ==================== */
+.glass {
+  background: var(--apple-glass-bg);
+  backdrop-filter: blur(12px) saturate(180%);
+  /* Reduced blur from 25px */
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid var(--apple-glass-border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  transform: translateZ(0);
+  /* Force GPU */
+}
+
+.glass-card {
+  background: rgba(0, 0, 0, 0.95);
+  /* Reduced blur for better performance on low-end devices */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  will-change: transform;
+}
+
+.glass-nav {
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ==================== NAV PILL BUTTONS - Fast & Clean ==================== */
+.nav-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.nav-pill:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.nav-pill:active {
+  transform: scale(0.97);
+}
+
+.nav-pill-icon {
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+.nav-pill:hover .nav-pill-icon {
+  opacity: 1;
+  color: #ec4899;
+}
+
+/* ==================== NEON EFFECTS ==================== */
+.neon-text-pink {
+  color: var(--neon-pink);
+  text-shadow: 0 0 10px rgba(255, 0, 204, 0.5), 0 0 30px rgba(255, 0, 204, 0.3), 0 0 60px rgba(255, 0, 204, 0.2);
+}
+
+.neon-text-blue {
+  color: var(--neon-blue);
+  text-shadow: 0 0 10px rgba(0, 204, 255, 0.5), 0 0 30px rgba(0, 204, 255, 0.3), 0 0 60px rgba(0, 204, 255, 0.2);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-purple) 50%, var(--neon-blue) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ==================== GRADIENT BUTTON ==================== */
+.gradient-btn {
+  background: linear-gradient(135deg, var(--neon-pink) 0%, var(--neon-purple) 50%, var(--neon-blue) 100%);
+  background-size: 200% 200%;
+  animation: gradientFlow 8s ease infinite;
+  /* Slowed from 4s */
+  border: none;
+  color: white;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform, background-position;
+  transform: translateZ(0);
+}
+
+.gradient-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gradient-btn:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(255, 0, 204, 0.4), 0 0 40px rgba(255, 0, 204, 0.2);
+}
+
+.gradient-btn:hover::before {
+  opacity: 1;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ==================== VIDEO BACKGROUND ==================== */
+.video-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.video-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  z-index: -2;
+  opacity: 0.5;
+}
+
+.video-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.9) 100%);
+  z-index: -1;
+}
+
+/* ==================== ANIMATED GRADIENT BG - Optimized ==================== */
+.animated-gradient-bg {
+  display: none !important;
+}
+
+/* ==================== TRADING GRID - Zero Lag ==================== */
+.trading-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  background-size: 40px 40px;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+  pointer-events: none;
+}
+
+/* ==================== FLOATING ORBS - Optimized ==================== */
+.orb,
+.orb-1,
+.orb-2 {
+  display: none !important;
+}
+
+/* Removed orb-3 for performance - was causing lag */
+
+@keyframes orbFloat1 {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(30px, 50px, 0);
+  }
+}
+
+@keyframes orbFloat2 {
+
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(-40px, -30px, 0);
+  }
+}
+
+/* ==================== GRAIN OVERLAY - Optimized ==================== */
+.grain-overlay {
+  display: none;
+  /* Permanently disabled as requested for lag-free experience */
+}
+
+/* ==================== MARQUEE - Optimized ==================== */
+.marquee {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  mask-image: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+  transform: translateZ(0);
+  /* Hardware acceleration */
+}
+
+.marquee-content {
+  display: flex;
+  animation: marquee 45s linear infinite;
+  /* Slowed from 30s */
+  gap: 4rem;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.marquee-content:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee-reverse .marquee-content {
+  animation-direction: reverse;
+}
+
+/* ==================== HOVER EFFECTS - Optimized ==================== */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px) translateZ(0);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 0, 204, 0.1);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 40px rgba(255, 0, 204, 0.2), 0 0 60px rgba(255, 0, 204, 0.08);
+}
+
+/* ==================== CARD SHINE ==================== */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shine::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.card-shine:hover::before {
+  left: 100%;
+}
+
+/* ==================== INPUT STYLES ==================== */
+.input-glass {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: white;
+  transition: all 0.4s ease;
+}
+
+.input-glass:focus {
+  outline: none;
+  border-color: var(--neon-pink);
+  box-shadow: 0 0 30px rgba(255, 0, 204, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.input-glass::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ==================== LOADING ==================== */
+.loader {
+  width: 60px;
+  height: 60px;
+  border: 3px solid transparent;
+  border-top-color: var(--neon-pink);
+  border-right-color: var(--neon-blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==================== FLOATING ==================== */
+.float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* ==================== SCROLL INDICATOR ==================== */
+.scroll-indicator {
+  animation: scrollBounce 2s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateY(12px);
+    opacity: 0.5;
+  }
+}
+
+/* ==================== GLOW BORDER - Optimized ==================== */
+.glow-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue), var(--neon-purple), var(--neon-pink));
+  background-size: 300% 300%;
+  border-radius: inherit;
+  z-index: -1;
+  animation: glowRotate 8s linear infinite;
+  /* Slowed from 4s */
+  filter: blur(6px);
+  /* Reduced from 10px */
+  opacity: 0.5;
+  /* Reduced from 0.7 */
+  will-change: background-position;
+}
+
+@keyframes glowRotate {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* ==================== GLITCH EFFECT ==================== */
+@keyframes glitch-1 {
+
+  0%,
+  100% {
+    clip-path: inset(40% 0 61% 0);
+    transform: translate(-2px, 0);
+  }
+
+  20% {
+    clip-path: inset(92% 0 1% 0);
+    transform: translate(0);
+  }
+
+  40% {
+    clip-path: inset(43% 0 1% 0);
+    transform: translate(-2px, 0);
+  }
+
+  60% {
+    clip-path: inset(25% 0 58% 0);
+    transform: translate(0);
+  }
+
+  80% {
+    clip-path: inset(54% 0 7% 0);
+    transform: translate(-2px, 0);
+  }
+}
+
+.glitch {
+  position: relative;
+  animation: glitch-1 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite;
+}
+
+/* ==================== MEDIA PROTECTION - Anti-Screen Recording ==================== */
+/* Hide content when window loses focus or recording detected */
+.media-hidden {
+  filter: blur(50px) brightness(0.1) !important;
+  opacity: 0.1 !important;
+  pointer-events: none !important;
+  transition: all 0.2s ease-out !important;
+}
+
+/* Obscure content completely (black screen) */
+.media-obscured {
+  filter: brightness(0) !important;
+  background: black !important;
+  pointer-events: none !important;
+}
+
+/* Base container for protected media */
+.media-protection-container {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+/* Prevent text selection in protected areas */
+.media-protection-container * {
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+
+/* Watermark items animation */
+.watermark-item {
+  animation: watermarkFloat 15s ease-in-out infinite;
+}
+
+@keyframes watermarkFloat {
+  0%, 100% { 
+    opacity: 0.05; 
+    transform: translateY(0) rotate(-15deg); 
+  }
+  50% { 
+    opacity: 0.12; 
+    transform: translateY(-10px) rotate(-12deg); 
+  }
+}

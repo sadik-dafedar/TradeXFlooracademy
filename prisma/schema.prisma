@@ -1,0 +1,289 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ProductType {
+  VIDEO_COURSE
+  PDF_RESOURCE
+}
+
+model User {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  email         String    @unique
+  name          String?
+  username      String?   @unique
+  password      String?
+  image         String?
+  emailVerified DateTime?
+  role          Role      @default(USER)
+  isVerified    Boolean   @default(false)
+  isBanned      Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+  subscriptions Subscription[]
+  payments      Payment[]
+  lessonProgress LessonProgress[]
+  adminLogs     AdminLog[]
+  adminSessions AdminSession[]
+
+  @@index([createdAt])
+  @@index([role, isBanned])
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime? @default(now())
+  updatedAt         DateTime? @updatedAt
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expires])
+}
+
+model Product {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  description  String?
+  type         ProductType
+  price        Float
+  contentUrl   String
+  thumbnail    String?
+  validityDays Int         @default(90)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  subscriptions Subscription[]
+  lessonProgress LessonProgress[]
+  payments      Payment[]
+
+  @@index([createdAt])
+}
+
+model Subscription {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  productId String   @db.ObjectId
+  startDate DateTime @default(now())
+  expiryAt  DateTime
+  isActive  Boolean  @default(true)
+  user      User     @relation(fields: [userId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+
+  @@index([userId, isActive, expiryAt])
+  @@index([productId])
+}
+
+model Payment {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  razorpayOrderId   String   @unique
+  razorpayPaymentId String?
+  status            String
+  amount            Float
+  currency          String   @default("INR")
+  userId            String   @db.ObjectId
+  user              User     @relation(fields: [userId], references: [id])
+  productId         String?  @db.ObjectId
+  product           Product? @relation(fields: [productId], references: [id])
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([createdAt])
+  @@index([userId])
+  @@index([productId])
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  token      String
+  identifier String   @unique
+  expires    DateTime
+
+  @@index([expires])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  token     String   @unique
+  email     String
+  expires   DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@index([expires])
+}
+
+model RateLimit {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  route     String
+  count     Int      @default(1)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@unique([identifier, route])
+  @@index([expiresAt])
+}
+
+model SystemConfig {
+  id                       String   @id @default(auto()) @map("_id") @db.ObjectId
+  key                      String   @unique @default("main_config") // Singleton key
+  siteName                 String   @default("TradeXFloor Academy")
+  siteDescription          String?
+  supportEmail             String?
+  maintenanceMode          Boolean  @default(false)
+  razorpayMode             String   @default("test")
+  defaultValidityDays      Int      @default(90)
+  enableEmailNotifications Boolean  @default(true)
+  enableNewUserWelcome     Boolean  @default(true)
+  updatedAt                DateTime @updatedAt
+}
+
+model LessonProgress {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String    @db.ObjectId
+  productId   String    @db.ObjectId
+  lessonId    String    // Identifier for the specific lesson within the product
+  completed   Boolean   @default(false)
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id])
+  product     Product   @relation(fields: [productId], references: [id])
+
+  @@unique([userId, productId, lessonId])
+  @@index([userId])
+}
+
+model ContactSubmission {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String
+  phone     String
+  reason    String
+  message   String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([read, createdAt])
+}
+
+model AdminSession {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  token          String   @unique
+  adminId        String   @db.ObjectId
+  expiresAt      DateTime
+  lastAccessedAt DateTime @default(now())
+  ipAddress      String?
+  userAgent      String?
+  createdAt      DateTime @default(now())
+  admin          User     @relation(fields: [adminId], references: [id])
+  
+  @@index([expiresAt])
+  @@index([adminId])
+}
+
+model AdminLog {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  adminId   String   @db.ObjectId
+  action    String
+  targetId  String?
+  details   String?
+  createdAt DateTime @default(now())
+  admin     User     @relation(fields: [adminId], references: [id])
+}
+
+// CMS MODELS
+
+model SiteConfig {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+model Testimonial {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  role      String
+  content   String
+  image     String?
+  profit    String?
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Feature {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  desc      String
+  icon      String
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Stat {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  label     String
+  value     String
+  suffix    String
+  icon      String
+  order     Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+// ENTERPRISE AUDIT LOGGING
+model AuditLog {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  timestamp  DateTime @default(now())
+  actorId    String?  @db.ObjectId
+  actorEmail String?
+  actorRole  String?
+  action     String   // LOGIN, LOGOUT, USER_CREATE, USER_DELETE, PRODUCT_UPDATE, etc.
+  targetType String?  // User, Product, Payment, Subscription, etc.
+  targetId   String?
+  details    String?  // Human-readable description
+  metadata   Json?    // Additional structured data
+  ip         String?
+  userAgent  String?
+  outcome    String   @default("SUCCESS") // SUCCESS, FAILURE, PARTIAL
+  
+  @@index([timestamp])
+  @@index([actorId])
+  @@index([action])
+  @@index([targetType, targetId])
+}
