@@ -310,9 +310,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👨‍💻 Author
 
 <p align="center">
-  <strong>NICK FURY</strong>
+  <strong>sadik-dafedar</strong>
   <br />
-  <a href="https://github.com/NICK-FURY-6023">GitHub</a>
+  <a href="https://github.com/sadik-dafedar">GitHub</a>
 </p>
 
 ---
